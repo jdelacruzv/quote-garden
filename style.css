@@ -189,12 +189,6 @@ body {
 
 .footer {
     width: 100%;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    font-family: Roboto;
-    padding: 16px 0;
-    color: #172E5F;
 }
 
 /* ==================== Media Query ==================== */
