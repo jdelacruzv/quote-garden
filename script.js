@@ -62,6 +62,9 @@ const showRandomQuote = random => {
         `;
         document.querySelector('.main__article').innerHTML = body;
     }
+    loadPage();
+    // Establece display 'none' a la clase spinner
+    document.querySelector('.spinner').style.display = 'none';
 } 
 
 // Evento del botón 'btnRandom'

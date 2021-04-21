@@ -7,7 +7,6 @@
 body {
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
-    /* height: 100vh; */
     overflow-y: scroll;    
 }
 
@@ -192,6 +191,29 @@ body {
 .footer {
     width: 100%;
 }
+
+/* ==================== Spinner ==================== */
+
+.spinner {
+    border: 16px solid rgba(0, 0, 0, 0.1);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* border-left-color: transparent; */
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 /* ==================== Media Query ==================== */
 
