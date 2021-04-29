@@ -6,34 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
     <title>QuoteGarden</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
     <header class="header">
         <figure class="header__title">
             <img src="img/icon.png" alt="Logo Stackly Code" class="header__image">
             <h3 class="header__name">Stackly Code</h3>
         </figure>
-        <div class="header__body">
-            <div class="header__search">
-                <input type="text" class="header__input" placeholder="Ingrese autor...">
-                <button class="header__button">Search</button>
+    </header>
+    
+    <main class="main">
+        <div class="main__body">
+            <div class="main__form">
+                <input type="text" class="main__input" placeholder="Ingrese autor..." autofocus>
+                <button class="main__button">Search</button>
             </div>
-            <figure class="header__random">Random
-                <img src="img/update.png" alt="Icono aleatorio" class="header__icon">
+            <figure class="main__random">Random
+                <img src="img/update.png" alt="Icono aleatorio" class="main__icon">
             </figure>
         </div>
-    </header>
-        
-    <main class="main">
-        <h1 class="main__title"></h1>
-        <article class="main__article">
-            <div class="spinner"></div>
-        </article>
+        <h1 class="main__author"></h1>
+        <article class="main__article"></article>
     </main>
     
-    <footer class="footer">
+    <footer class="header">
         <figure class="header__title">
             <img src="img/icon.png" alt="Logo Stackly Code" class="header__image">
             <h3 class="header__name">Stackly Code</h3>
@@ -41,6 +38,6 @@
     </footer>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
