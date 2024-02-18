@@ -19,7 +19,7 @@ const getAuthorName = () => {
     .then(() => search.focus());
   } else {
     loadSpinner();
-    fetch(`https://quote-garden.herokuapp.com/api/v3/quotes?author=${search.value}&limit=4`)
+    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${search.value}&limit=4`)
     .then(response => response.json())
     .then(quotes => showAuthorQuotes(quotes))
     .catch(error => {
@@ -58,12 +58,12 @@ const getRandomNumber = () => Math.floor((Math.random() * 11370) + 1);
 // Conexión a la API 'quote-garden authors' y 'quote-garden quotes'
 const getRandomAuthorName = () => {
   loadSpinner();
-  fetch(`https://quote-garden.herokuapp.com/api/v3/authors`)
+  fetch(`https://quote-garden.onrender.com/api/v3/authors`)
   .then(response => response.json())
   .then(authors => {
     let name = authors.data[getRandomNumber()];
     console.log(name); // Trae el autor correctamente
-    fetch(`https://quote-garden.herokuapp.com/api/v3/quotes?author=${name}&limit=4`)
+    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${name}&limit=4`)
     .then(response => response.json())
     .then(random => showRandomQuote(random));
   });
