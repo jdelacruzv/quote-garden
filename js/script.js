@@ -9,7 +9,9 @@ const loadSpinner = () => {
   document.querySelector('.main__article').innerHTML = `<div class="spinner"></div>`;
 }
 
-// Conexión a la API 'quote-garden quotes'
+// ---> Conexión a la API 'https://github.com/lukePeavey/quotable'
+
+// Obtener autor por su nombre
 const getAuthorName = () => {
   if(search.value === '') {
     swal('', 'Ingrese nombre del autor...', 'info', {
@@ -19,75 +21,83 @@ const getAuthorName = () => {
     .then(() => search.focus());
   } else {
     loadSpinner();
-    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${search.value}&limit=4`)
-    .then(response => response.json())
-    .then(quotes => showAuthorQuotes(quotes))
-    .catch(error => {
-      document.querySelector('.spinner').style.display = 'none';
-      error = 'Not found... try again!';
-      document.querySelector('.main__author').textContent = `${error}`;  
-      search.value = '';
-      search.focus();
-    });
+    // Buscar autor por su nombre
+    fetch(`https://api.quotable.io/search/authors?query=${search.value}`)
+			.then((response) => response.json())
+			.then(authors => {
+				// console.log("search:", authors.results[0]);
+				// Obtiene id del autor
+				getAuthorID(authors.results[0]._id);
+			})
+			.catch((error) => {
+				document.querySelector(".spinner").style.display = "none";
+				error = "Not found... try again!";
+				document.querySelector(".main__author").textContent = `${error}`;
+				search.value = "";
+				search.focus();
+			});
+    search.value = '';
+    search.focus();
   }
 }
-
-// Muestra los datos al dar click en el botón search
-const showAuthorQuotes = quotes => {
-  document.querySelector('.main__author').textContent = quotes.data[0].quoteAuthor;  
-  let body = '';
-  for(let i=0; i<quotes.data.length; i++) {
-    body += `
-      <div class="quotes">
-        <h3 class="quotes__title">${quotes.data[i].quoteGenre}</h3>
-        <p class="quotes__text">"${quotes.data[i].quoteText}"</p>
-      </div>
-    `;
-    document.querySelector('.main__article').innerHTML = body;
-  }
-  search.value = '';
-  search.focus();
-} 
 
 // Evento del botón 'btnSearch'
 btnSearch.addEventListener('click', getAuthorName);
 
-// Obtiene un número aleatorio de 1 al 11370
-const getRandomNumber = () => Math.floor((Math.random() * 11370) + 1);
+// Obtener un numero aleatorio segun el parametro pasado
+	const getRandomNumber = (number) => Math.floor(Math.random() * number + 1);
+  // console.log("Random number:", getRandomNumber(41));
 
-// Conexión a la API 'quote-garden authors' y 'quote-garden quotes'
-const getRandomAuthorName = () => {
-  loadSpinner();
-  fetch(`https://quote-garden.onrender.com/api/v3/authors`)
-  .then(response => response.json())
-  .then(authors => {
-    let name = authors.data[getRandomNumber()];
-    console.log(name); // Trae el autor correctamente
-    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${name}&limit=4`)
-    .then(response => response.json())
-    .then(random => showRandomQuote(random));
-  });
+// Obtener autor aleatorio
+const getRandomAuthor = () => {
+	loadSpinner();
+	// Obtener paginas aleatoria (1 al 41)
+	fetch(`https://api.quotable.io/authors?sortBy=name&page=${getRandomNumber(41)}`)
+	  .then((response) => response.json())
+	  .then((authors) => {
+      // Obtener id del autor aleatorio (1 al 20)
+      getAuthorID(authors.results[getRandomNumber(20)]._id);
+	  });
 }
 
-// Muestra los datos según el resultado del botón random 
-const showRandomQuote = random => {
-  console.log(random.data);
-  console.log(random.data[0].quoteAuthor); // A veces quoteAuthor is undefined
-  document.querySelector('.main__author').textContent = random.data[0].quoteAuthor;  
-  let body = '';
-  for(let i=0; i<random.data.length; i++) {
-    body += `
+// Obtener datos del autor por su id
+const getAuthorID = (id) => {
+	fetch(`https://api.quotable.io/authors/${id}`)
+		.then((response) => response.json())
+		.then((data) => showAuthorQuote(data));
+};
+
+// Mostrar datos según el resultado del boton random 
+const showAuthorQuote = data => {
+  // console.log("Random:", data);  
+  if (data.quotes.length === 0) {
+    // Agrega el nombre del autor
+    document.querySelector(".main__author").textContent = data.name;
+    // Mensaje si no hay citas disponibles para el autor
+    document.querySelector(".main__article").innerHTML = `
       <div class="quotes">
-        <h3 class="quotes__title">${random.data[i].quoteGenre}</h3>
-        <p class="quotes__text">"${random.data[i].quoteText}"</p>
-      </div>
+        <p>No quotes available for this author</p>
+      </div>            
     `;
-    document.querySelector('.main__article').innerHTML = body;
-  }
-} 
+  } else {
+    // Agrega el nombre del autor
+    document.querySelector(".main__author").textContent = data.name;
+    // Agrega las citas del autor
+		let body = "";
+		for (let i = 0; i < data.quotes.length; i++) {
+			body += `
+        <div class="quotes">
+          <h3 class="quotes__title">${data.quotes[i].tags[0]}</h3>
+          <p class="quotes__text">"${data.quotes[i].content}"</p>
+        </div>
+      `;
+			document.querySelector(".main__article").innerHTML = body;
+		}
+  } 
+}
 
-// Evento del botón 'btnRandom'
-btnRandom.addEventListener('click', getRandomAuthorName);
+// Evento del boton 'btnRandom'
+btnRandom.addEventListener('click', getRandomAuthor);
 
-// Carga la página llamando a la función quoteRandom()
-window.onload = getRandomAuthorName();
+// Carga la pagina llamando a la funcion 'quoteRandom()'
+window.onload = getRandomAuthor();
