@@ -1,43 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
-  <title>QuoteGarden</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header class="header">
-    <figure class="header__title">
-      <img src="img/icon.png" alt="Logo Stackly Code" class="header__image">
-      <h3 class="header__name">Stackly Code</h3>
-    </figure>
-  </header>
-    
-  <main class="main">
-    <div class="main__body">
-      <div class="main__form">
-        <input type="text" class="main__input" placeholder="Ingrese autor..." autofocus>
-        <button class="main__button">Search</button>
-      </div>
-      <figure class="main__random">Random
-        <img src="img/update.png" alt="Icono aleatorio" class="main__icon">
-      </figure>
-    </div>
-    <h1 class="main__author"></h1>
-    <article class="main__article"></article>
-  </main>
-    
-  <footer class="header">
-    <figure class="header__title">
-      <img src="img/icon.png" alt="Logo Stackly Code" class="header__image">
-      <h3 class="header__name">Stackly Code</h3>
-    </figure>
-  </footer>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="shortcut icon" href="img/icon.png" type="image/x-icon" />
+		<title>QuoteGarden</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<header class="header">
+			<figure class="header__title">
+				<img src="img/icon.png" alt="Logo Stackly Code" class="header__image" />
+				<h3 class="header__name">Stackly Code</h3>
+				<button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+					<i class="fa-solid fa-moon" id="themeIcon"></i>
+				</button>
+			</figure>
+		</header>
 
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="js/script.js"></script>
-</body>
+		<main class="main">
+			<div class="main__body">
+				<figure class="main__random">
+					Random
+					<i class="fa-solid fa-dice main__icon"></i>
+				</figure>
+				<div class="main__form">
+					<input
+						type="text"
+						class="main__input"
+						placeholder="Ingrese autor..."
+						autofocus
+					/>
+					<button class="main__button">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</div>
+			</div>
+			<h1 class="main__author"></h1>
+			<article class="main__article"></article>
+		</main>
+
+		<footer class="footer">
+			<figure class="footer__title">
+				<img src="img/icon.png" alt="Logo Stackly Code" class="footer__image" />
+				<h3 class="footer__name">Stackly Code</h3>
+			</figure>
+		</footer>
+
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="js/script.js"></script>
+	</body>
 </html>
