@@ -1,0 +1,26 @@
+{
+	"name": "quote-garden",
+	"version": "1.0.0",
+	"description": "Quote Garden API that allows obtaining phrases from various authors.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"predeploy": "echo 'Preparando despliegue...'",
+		"deploy": "gh-pages -d ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jdelacruzv/quote-garden.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/jdelacruzv/quote-garden/issues"
+	},
+	"homepage": "https://github.com/jdelacruzv/quote-garden/",
+	"devDependencies": {
+		"gh-pages": "^6.3.0"
+	}
+}
