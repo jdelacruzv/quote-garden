@@ -20,17 +20,24 @@ const loadSpinner = () => {
 const getRandomAuthor = () => {
 	loadSpinner();
 
-	// DummyJSON provee un endpoint directo para frases aleatorias
 	fetch("https://dummyjson.com/quotes/random")
 		.then((response) => {
 			if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 			return response.json();
 		})
 		.then((data) => {
-			// Mostramos el autor y la cita directamente con la estructura de DummyJSON
+			// Verificamos si 'tags' existe y tiene elementos; si no, usamos un respaldo seguro
+			const quoteTag =
+				data.tags && data.tags.length > 0 ? data.tags[0] : "Quote";
+
 			showAuthorQuote({
 				name: data.author,
-				quotes: [{ content: data.quote, tags: ["Inspiration"] }],
+				quotes: [
+					{
+						content: data.quote,
+						tags: [quoteTag],
+					},
+				],
 			});
 		})
 		.catch((error) => {
@@ -43,42 +50,47 @@ const getRandomAuthor = () => {
   Buscar frases por autor de forma segura filtrando localmente el catálogo
 */
 const getAuthorName = () => {
-  const query = search.value.trim();
-  if (query === '') {
-    swal('', 'Ingrese nombre del autor...', 'info', {
-      buttons: false,
-      timer: 1500,
-    }).then(() => search.focus());
-  } else {
-    loadSpinner();
-    
-    // Obtenemos un límite alto de citas para asegurar coincidencias del autor
-    fetch(`https://dummyjson.com/quotes?limit=150`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Filtramos las citas comparando el nombre del autor (insensible a mayúsculas/minúsculas)
-        const filteredQuotes = data.quotes.filter(q => 
-          q.author.toLowerCase().includes(query.toLowerCase())
-        );
+	const query = search.value.trim();
+	if (query === "") {
+		swal("", "Ingrese nombre del autor...", "info", {
+			buttons: false,
+			timer: 1500,
+		}).then(() => search.focus());
+	} else {
+		loadSpinner();
 
-        if (filteredQuotes.length > 0) {
-          const authorName = filteredQuotes[0].author;
-          showAuthorQuote({
-            name: authorName,
-            quotes: filteredQuotes.map(q => ({ content: q.quote, tags: ["Search"] }))
-          });
-        } else {
-          showError("Not found... try again!");
-        }
-      })
-      .catch((error) => {
-        console.error("Search Error:", error);
-        showError("Not found... try again!");
-      });
+		fetch(`https://dummyjson.com/quotes?limit=150`)
+			.then((response) => response.json())
+			.then((data) => {
+				const filteredQuotes = data.quotes.filter((q) =>
+					q.author.toLowerCase().includes(query.toLowerCase()),
+				);
 
-    search.value = '';
-    search.focus();
-  }
+				if (filteredQuotes.length > 0) {
+					const authorName = filteredQuotes[0].author;
+					showAuthorQuote({
+						name: authorName,
+						quotes: filteredQuotes.map((q) => {
+							// Obtenemos la primera etiqueta de forma segura
+							const tag = q.tags && q.tags.length > 0 ? q.tags[0] : "Quote";
+							return {
+								content: q.quote,
+								tags: [tag],
+							};
+						}),
+					});
+				} else {
+					showError("Not found... try again!");
+				}
+			})
+			.catch((error) => {
+				console.error("Search Error:", error);
+				showError("Not found... try again!");
+			});
+
+		search.value = "";
+		search.focus();
+	}
 };
 
 /* 
