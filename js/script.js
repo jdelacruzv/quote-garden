@@ -119,3 +119,40 @@ btnRandom.addEventListener("click", getRandomAuthor);
   Carga inicial al abrir la página
 */
 window.addEventListener("DOMContentLoaded", getRandomAuthor);
+
+
+/* 
+  Lógica para el Modo Oscuro / Claro con iconos FontAwesome
+*/
+const themeToggleBtn = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+// Comprobar si el usuario ya tenía una preferencia guardada previamente
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  if (themeIcon) {
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+  }
+}
+
+// Evento para alternar el tema
+themeToggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  
+  let theme = 'light';
+  if (document.body.classList.contains('dark-mode')) {
+    theme = 'dark';
+    // Cambiar a icono de Sol vectorial
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+  } else {
+    // Cambiar a icono de Luna vectorial
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+  }
+  
+  // Guardar la preferencia en el navegador
+  localStorage.setItem('theme', theme);
+});
